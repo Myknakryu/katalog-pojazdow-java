@@ -10,15 +10,16 @@ public class Interfejs {
 
     public static int uzyskajInt(){
         while(true){
-
+            int x;
             try{
-                return skaner.nextInt();
+                x = skaner.nextInt();
+                skaner.nextLine();
+                return x;
             }
             catch(Exception e){
                 skaner.nextLine();
             }
         }
-
     }
 
     public static void wypiszKatalog(List<Pojazd> katalog){
@@ -36,7 +37,6 @@ public class Interfejs {
             System.out.printf("%d. %s%n", i++, opcja);
         }
     }
-
 
     public static Pojazd wczytajPojazd(){
         String[] opcje = { "Podaj markę", "Podaj model", "Podaj rocznik", "Podaj pojemność (w cm³)", "Podaj przebieg (w km)", "Podaj typ skrzyni\n 1- automatyczna by ustawić automatyczna" };
@@ -57,6 +57,17 @@ public class Interfejs {
         return samochod;
     }
 
+    public static int wyborElementu(List<Pojazd> katalog, String wiadomosc) {
+        int opcja, rozmiar = katalog.size();
+        while (true)
+        {
+            System.out.printf("%s\nPodaj wartosc od 1 do %d: ", wiadomosc, rozmiar);
+            opcja = uzyskajInt();
+            if(opcja > 0 && opcja <=rozmiar)
+                return opcja-1;
+        }
+    }
+
     public static void obslugaMenu(){
         List<Pojazd> katalog = new ArrayList<>();
         while(true){
@@ -64,11 +75,11 @@ public class Interfejs {
             int opcja = uzyskajInt();
             switch(opcja){
                 case 1:{
-
+                    katalog = OperacjePlikowe.wczytajPlik();
                     break;
                 }
                 case 2:{
-
+                    OperacjePlikowe.zapisDoPliku(katalog);
                     break;
                 }
                 case 3:{
@@ -84,7 +95,7 @@ public class Interfejs {
                     break;
                 }
                 case 6:{
-
+                    katalog.get(wyborElementu(katalog, "Podaj element do wyświetlenia")).Wypisz();
                     break;
                 }
                 case 7:{
@@ -92,7 +103,7 @@ public class Interfejs {
                     break;
                 }
                 case 8:{
-
+                    katalog.remove(wyborElementu(katalog, "Podaj element do usunięcia"));
                     break;
                 }
                 case 9:{

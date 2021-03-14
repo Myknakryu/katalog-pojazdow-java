@@ -1,7 +1,10 @@
 package pl.myku.katalog.pojazdow;
+
+import java.io.Serializable;
+
 enum typ_skrzyni {manualna, automatyczna}
 
-public class Pojazd {
+public class Pojazd implements Serializable {
 
     public String Marka;
     public String Model;
