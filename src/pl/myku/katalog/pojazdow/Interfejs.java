@@ -1,5 +1,6 @@
 package pl.myku.katalog.pojazdow;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -68,6 +69,19 @@ public class Interfejs {
         }
     }
 
+    public static void wyborSortowanie(List<Pojazd> katalog){
+        int i = 0;
+        var pola = Pojazd.class.getFields();
+        for(Field pole : pola){
+            System.out.printf("%d. %s\n",i++, pole.getName());
+        }
+        int opcja = uzyskajInt();
+        System.out.println("Rosnąco(dowolna liczba) czy malejąco(0): ");
+        int rosnaca = uzyskajInt();
+        Funkcje.sortuj(katalog, pola, opcja, rosnaca);
+    }
+
+
     public static void obslugaMenu(){
         List<Pojazd> katalog = new ArrayList<>();
         while(true){
@@ -99,7 +113,7 @@ public class Interfejs {
                     break;
                 }
                 case 7:{
-
+                    wyborSortowanie(katalog);
                     break;
                 }
                 case 8:{
