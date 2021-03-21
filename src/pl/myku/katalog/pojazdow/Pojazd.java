@@ -15,7 +15,7 @@ public class Pojazd implements Serializable {
 
     public Pojazd() {}
 
-    public Pojazd(String Marka, String Model, int Rocznik, int Pojemnosc, int Przebieg, typ_skrzyni Skrzynia){
+    public Pojazd(String Marka, String Model, int Rocznik, int Pojemnosc, int Przebieg, typ_skrzyni Skrzynia) {
         this.Marka = Marka;
         this.Model = Model;
         this.Rocznik = Rocznik;
@@ -25,11 +25,11 @@ public class Pojazd implements Serializable {
     }
 
     @Override
-    public String toString(){
-      return String.format("%s %s - %d - %d cm³ - %dkm - %s", Marka, Model, Rocznik, Pojemnosc, Przebieg, (Skrzynia==typ_skrzyni.automatyczna? "Automatyczna": "Manualna"));
+    public String toString() {
+        return String.format("%s %s - %d - %d cm³ - %dkm - %s", Marka, Model, Rocznik, Pojemnosc, Przebieg, (Skrzynia == typ_skrzyni.automatyczna ? "Automatyczna" : "Manualna"));
     }
 
-    public void Wypisz(){
+    public void wypisz() {
         System.out.println(toString());
     }
 }

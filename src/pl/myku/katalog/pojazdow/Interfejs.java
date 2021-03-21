@@ -25,7 +25,7 @@ public class Interfejs {
 
     public static void wypiszKatalog(List<Pojazd> katalog){
         for(var element: katalog){
-            element.Wypisz();
+            element.wypisz();
         }
     }
 
@@ -69,18 +69,52 @@ public class Interfejs {
         }
     }
 
-    public static void wyborSortowanie(List<Pojazd> katalog){
+    public static int wybierzPole(){
         int i = 0;
         var pola = Pojazd.class.getFields();
         for(Field pole : pola){
             System.out.printf("%d. %s\n",i++, pole.getName());
         }
-        int opcja = uzyskajInt();
-        System.out.println("Rosnąco(dowolna liczba) czy malejąco(0): ");
-        int rosnaca = uzyskajInt();
-        Funkcje.sortuj(katalog, pola, opcja, rosnaca);
+        return uzyskajInt();
     }
 
+    public static void wyborSortowanie(List<Pojazd> katalog){
+
+        int opcja = wybierzPole();
+        System.out.println("Rosnąco(dowolna liczba) czy malejąco(0): ");
+        int rosnaca = uzyskajInt();
+        Funkcje.sortuj(katalog, Pojazd.class.getFields(), opcja, rosnaca);
+    }
+    public static void wyborSzukania(List<Pojazd> katalog){
+        int opcja = wybierzPole();
+        switch(Funkcje.sprawdzTyp(opcja)){
+            case 1:{
+                System.out.println("Podaj czy ma być: \n(1) większe \n(2) mniejsze\n (3)równe\n");
+                int operator = uzyskajInt();
+                System.out.println("Wprowadź wartość: ");
+                int wart = uzyskajInt();
+                WyswietlanieWarunkowe.znajdzWartosc(katalog,wart,operator,opcja);
+                break;
+            }
+            case 2:{
+                System.out.println("podaj wzorzec: ");
+                String wzorzec = skaner.nextLine();
+                WyswietlanieWarunkowe.znajdzString(katalog, wzorzec, opcja);
+                break;
+            }
+            case 3:{
+                System.out.println("Podaj czy ma być: \n(0) automatyczna \n(dowolna) manualna\n");
+                int wart = uzyskajInt();
+                WyswietlanieWarunkowe.znajdzSkrzynia(katalog,
+                        (wart!=0?typ_skrzyni.manualna:typ_skrzyni.automatyczna));
+                break;
+            }
+            default:{
+                System.out.println("Błędne pole!");
+                break;
+            }
+        }
+    }
 
     public static void obslugaMenu(){
         List<Pojazd> katalog = new ArrayList<>();
@@ -105,11 +139,11 @@ public class Interfejs {
                     break;
                 }
                 case 5:{
-
+                    wyborSzukania(katalog);
                     break;
                 }
                 case 6:{
-                    katalog.get(wyborElementu(katalog, "Podaj element do wyświetlenia")).Wypisz();
+                    katalog.get(wyborElementu(katalog, "Podaj element do wyświetlenia")).wypisz();
                     break;
                 }
                 case 7:{

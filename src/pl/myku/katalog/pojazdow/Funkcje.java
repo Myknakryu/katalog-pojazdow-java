@@ -8,21 +8,19 @@ public class Funkcje {
         return a;
     }
 
-    public static void sortuj(List<Pojazd> katalog, Field[] pola, int opcja, int rosnaca){
+    public static void sortuj(List<Pojazd> katalog, Field[] pola, int opcja, int rosnaca) {
         katalog.sort((o1, o2) -> {
             try {
-                if(rosnaca==0)
+                if (rosnaca == 0)
                     o2 = swap(o1, o1 = o2);
                 var typ = pola[opcja].getType();
-                if(typ.equals(int.class)){
+                if (typ.equals(int.class)) {
                     return (pola[opcja].getInt(o1) -
                             pola[opcja].getInt(o2));
-                }
-                else if(typ.equals(String.class)){
-                    return ((String) pola[opcja].get(o1)).compareTo(
-                            (String) pola[opcja].get(o2));
-                }
-                else if(typ.equals(typ_skrzyni.class)){
+                } else if (typ.equals(String.class)) {
+                    return ((String) pola[opcja].get(o1)).toUpperCase().compareTo(
+                            ((String) pola[opcja].get(o2)).toUpperCase());
+                } else if (typ.equals(typ_skrzyni.class)) {
                     return (((typ_skrzyni) pola[opcja].get(o1)).name().compareTo(
                             ((typ_skrzyni) pola[opcja].get(o2)).name()));
                 }
@@ -35,4 +33,25 @@ public class Funkcje {
         });
         Interfejs.wypiszKatalog(katalog);
     }
+
+    public static int sprawdzTyp(int opcja) {
+        var pola = Pojazd.class.getFields();
+        try {
+            var typ = pola[opcja].getType();
+            if (typ.equals(int.class)) {
+                return 1;
+            } else if (typ.equals(String.class)) {
+                return 2;
+            } else if (typ.equals(typ_skrzyni.class)) {
+                return 3;
+            }
+            return 0;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
 }
+
